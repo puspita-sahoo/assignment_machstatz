@@ -5,6 +5,7 @@ charset-normalizer==2.0.6
 colorama==0.4.4
 Django==3.2.7
 executing==0.8.1
+gunicorn==20.1.0
 icecream==2.1.1
 idna==3.2
 Pygments==2.10.0

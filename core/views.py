@@ -1,12 +1,15 @@
+import re
+import json
 import requests
 from datetime import datetime,timedelta
-from django.http import JsonResponse
 
-import re
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
-                          
-# production api
+
+
+def ping(request):
+    return JsonResponse({'message': 'pong'})
+
 @csrf_exempt
 def production_count(request):
     # INPUT
@@ -53,8 +56,6 @@ def production_count(request):
                     monitor["shiftC"]['production_B_count'] +=1
     return JsonResponse(monitor)
 
-
-# machine api
 @csrf_exempt
 def machine_data(request):
     # INPUT
@@ -77,26 +78,12 @@ def machine_data(request):
             runtime += i['runtime']
             downtime += i['downtime']
 
-    utilisation = (runtime) / (runtime + downtime) * 100
-
-    runtime = convert(runtime)
-    downtime = convert(downtime)
-
-    runtime = runtime.split(':')[0]+"h:"+runtime.split(':')[1]+"m:"+runtime.split(':')[2]+"s"
-    downtime = downtime.split(':')[0]+"h:"+downtime.split(':')[1]+"m:"+downtime.split(':')[2]+"s"
-
     return JsonResponse({
-        "runtime": runtime,
-        "downtime": downtime,
-        "utilisation": utilisation
+        "runtime": f"{runtime//3600}h:{runtime%3600//60}m:{runtime%60}s",
+        "downtime": f"{downtime//3600}h:{downtime%3600//60}m:{downtime%60}s",
+        "utilisation": (runtime) / (runtime + downtime) * 100
     })
 
-def convert(n):
-    return str(timedelta(seconds = n))
-
-
-
-# belt api
 @csrf_exempt
 def belts_avg(request):
     # INPUT
