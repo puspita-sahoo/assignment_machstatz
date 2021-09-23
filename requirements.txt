@@ -1,0 +1,15 @@
+asgiref==3.4.1
+asttokens==2.0.5
+certifi==2021.5.30
+charset-normalizer==2.0.6
+colorama==0.4.4
+Django==3.2.7
+executing==0.8.1
+icecream==2.1.1
+idna==3.2
+Pygments==2.10.0
+pytz==2021.1
+requests==2.26.0
+six==1.16.0
+sqlparse==0.4.2
+urllib3==1.26.7
