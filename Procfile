@@ -1,1 +1,1 @@
-web: gunicorn assignment_machstatz.wsgi
+web: gunicorn core.wsgi
