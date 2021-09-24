@@ -74,9 +74,12 @@ def machine_data(request):
         machine_status_time = datetime.strptime(i['time'], "%Y-%m-%d %H:%M:%S")
         if q_start_time < machine_status_time < q_end_time:
             if i['runtime'] > 1021:
-                i['downtime'] = i['runtime'] - 1021
-            runtime += i['runtime']
-            downtime += i['downtime']
+                extra_downtime = i['runtime'] - 1021
+                runtime += 1021
+                downtime += i['downtime'] + extra_downtime
+            else:
+                runtime += i['runtime']
+                downtime += i['downtime']
 
     return JsonResponse({
         "runtime": f"{runtime//3600}h:{runtime%3600//60}m:{runtime%60}s",
